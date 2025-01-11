@@ -6,6 +6,7 @@ import PageUtama from "./pages/PageUtama";
 import Tentang from "./pages/menu/tentang";
 import Misi from "./pages/menu/misi";
 import Program from "./pages/menu/program";
+import Detail from "./pages/detail/index";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           <Route path="/tentang" element={<Tentang />} />
           <Route path="/visimisi" element={<Misi />} />
           <Route path="/program" element={<Program />} />
+          <Route path="/detail/:id" element={<Detail />} />
         </Routes>
       </div>
     </Router>

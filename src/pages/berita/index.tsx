@@ -1,98 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Berita = () => {
+// Definisi tipe data untuk berita
+interface BeritaItem {
+  id: number;
+  gambar: string;
+  judul: string;
+  deskripsi: string;
+  penulis: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Definisi tipe data untuk respons API
+interface BeritaResponse {
+  status: string;
+  message: string;
+  data: BeritaItem[];
+}
+
+const Berita: React.FC = () => {
+  const [berita, setBerita] = useState<BeritaItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const truncate = (text: string, maxLength: number): string => {
+    return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+  };
+
+  useEffect(() => {
+    const fetchBerita = async () => {
+      try {
+        const response = await fetch("https://relawan.rekapitung.id/api/berita");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const result: BeritaResponse = await response.json();
+        if (result.status === "success") {
+          setBerita(result.data);
+        } else {
+          throw new Error(result.message || "Unknown error");
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBerita();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <>
-      <div className="flex gap-2 items-center mt-4 ">
-        <div className="px-2  border bg-[#A31D1D] text-white rounded-full">3</div>
-
+      <div className="flex gap-2 items-center mt-4">
+        <div className="px-2 border bg-[#A31D1D] text-white rounded-full">3</div>
         <h1 className="text-[#A31D1D] text-start font-bold text-xl">News Feed</h1>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
-        <div className="border rounded-lg shadow-md overflow-hidden ">
-          <div className="h-48 overflow-hidden">
-            <img src="images/prabowomania.jpeg" alt="Berita" className="w-full h-full object-cover" />
-          </div>
-          <div className="p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Judul Berita</h2>
-            <p className="text-gray-600 text-sm mb-4">Ini adalah deskripsi singkat dari berita. Panjang deskripsi bisa disesuaikan.</p>
-            <div className="text-gray-500 text-xs flex justify-between">
-              <span>Dibuat: 10 Jan 2025</span>
-              <span>Author: John Doe</span>
+        {berita.map((item) => (
+          <div key={item.id} className="border rounded-lg shadow-md overflow-hidden">
+            <div className="h-48 overflow-hidden">
+              <img src={item.gambar} alt={item.judul} className="w-full h-full object-cover" />
+            </div>
+            <div className="p-4">
+              <h2 className="text-xl font-semibold text-gray-800 mb-2 hover:text-[#A31D1D] cursor-pointer" onClick={() => navigate(`/detail/${item.id}`)}>
+                {truncate(item.judul, 50)}
+              </h2>
+              <p className="text-gray-600 text-sm mb-4 hover:text-[#A31D1D] cursor-pointer" onClick={() => navigate(`/detail/${item.id}`)}>
+                {truncate(item.deskripsi, 100)}
+              </p>
+              <div className="text-gray-500 text-xs flex justify-between">
+                <span>Dibuat: {new Date(item.created_at).toLocaleDateString()}</span>
+                <span>Author: {item.penulis}</span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="border rounded-lg shadow-md overflow-hidden ">
-          <div className="h-48 overflow-hidden">
-            <img src="images/prabowomania.jpeg" alt="Berita" className="w-full h-full object-cover" />
-          </div>
-          <div className="p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Judul Berita</h2>
-            <p className="text-gray-600 text-sm mb-4">Ini adalah deskripsi singkat dari berita. Panjang deskripsi bisa disesuaikan.</p>
-            <div className="text-gray-500 text-xs flex justify-between">
-              <span>Dibuat: 10 Jan 2025</span>
-              <span>Author: John Doe</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="border rounded-lg shadow-md overflow-hidden ">
-          <div className="h-48 overflow-hidden">
-            <img src="images/prabowomania.jpeg" alt="Berita" className="w-full h-full object-cover" />
-          </div>
-          <div className="p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Judul Berita</h2>
-            <p className="text-gray-600 text-sm mb-4">Ini adalah deskripsi singkat dari berita. Panjang deskripsi bisa disesuaikan.</p>
-            <div className="text-gray-500 text-xs flex justify-between">
-              <span>Dibuat: 10 Jan 2025</span>
-              <span>Author: John Doe</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="border rounded-lg shadow-md overflow-hidden ">
-          <div className="h-48 overflow-hidden">
-            <img src="images/prabowomania.jpeg" alt="Berita" className="w-full h-full object-cover" />
-          </div>
-          <div className="p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Judul Berita</h2>
-            <p className="text-gray-600 text-sm mb-4">Ini adalah deskripsi singkat dari berita. Panjang deskripsi bisa disesuaikan.</p>
-            <div className="text-gray-500 text-xs flex justify-between">
-              <span>Dibuat: 10 Jan 2025</span>
-              <span>Author: John Doe</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="border rounded-lg shadow-md overflow-hidden ">
-          <div className="h-48 overflow-hidden">
-            <img src="images/prabowomania.jpeg" alt="Berita" className="w-full h-full object-cover" />
-          </div>
-          <div className="p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Judul Berita</h2>
-            <p className="text-gray-600 text-sm mb-4">Ini adalah deskripsi singkat dari berita. Panjang deskripsi bisa disesuaikan.</p>
-            <div className="text-gray-500 text-xs flex justify-between">
-              <span>Dibuat: 10 Jan 2025</span>
-              <span>Author: John Doe</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="border rounded-lg shadow-md overflow-hidden ">
-          <div className="h-48 overflow-hidden">
-            <img src="images/prabowomania.jpeg" alt="Berita" className="w-full h-full object-cover" />
-          </div>
-          <div className="p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Judul Berita</h2>
-            <p className="text-gray-600 text-sm mb-4">Ini adalah deskripsi singkat dari berita. Panjang deskripsi bisa disesuaikan.</p>
-            <div className="text-gray-500 text-xs flex justify-between">
-              <span>Dibuat: 10 Jan 2025</span>
-              <span>Author: John Doe</span>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </>
   );
