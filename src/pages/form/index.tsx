@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Menu from "../menu";
 import Berita from "../berita";
 import Foother from "../../components/foother/foother";
@@ -18,11 +18,15 @@ const Form = () => {
   const [email, setemail] = useState<string>("");
   const [no_hp, setno_hp] = useState<string>("");
   const [motivasi, setmotivasi] = useState<string>("");
-  const [kontribusi, setkontribusi] = useState<string>("");
+  const [pengurus, setpengurus] = useState<string>("");
   const [ktp, setktp] = useState<File | null>(null);
+  const [kta, setkta] = useState<File | null>(null);
+  const [kk, setkk] = useState<File | null>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+
+  const [count, setCount] = useState(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,8 +43,10 @@ const Form = () => {
     formData.append("email", email);
     formData.append("no_hp", no_hp);
     formData.append("motivasi", motivasi);
-    formData.append("kontribusi", kontribusi);
+    formData.append("pengurus", pengurus);
     formData.append("ktp", ktp as Blob);
+    formData.append("kta", kta as Blob);
+    formData.append("kk", kk as Blob);
     try {
       const response = await axios.post("https://relawan.rekapitung.id/api/formulir", formData, {
         headers: {
@@ -58,6 +64,24 @@ const Form = () => {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    // Fungsi untuk mengambil data dari backend
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://relawan.rekapitung.id/api/formulir/count");
+        if (!response.ok) {
+          throw new Error("Gagal mengambil data");
+        }
+        const data = await response.json();
+        setCount(data.count);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -128,7 +152,7 @@ const Form = () => {
               className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none"
               onChange={(e) => {
                 const file = e.target.files?.[0] || null; // Mendapatkan file pertama yang dipilih atau null
-                setktp(file); // Memperbarui state dengan file
+                setkta(file); // Memperbarui state dengan file
               }}
             />
           </div>
@@ -156,7 +180,7 @@ const Form = () => {
               className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none"
               onChange={(e) => {
                 const file = e.target.files?.[0] || null; // Mendapatkan file pertama yang dipilih atau null
-                setktp(file); // Memperbarui state dengan file
+                setkk(file); // Memperbarui state dengan file
               }}
             />
           </div>
@@ -173,23 +197,26 @@ const Form = () => {
             <label className="block mb-1 font-semibold">Bersedia menjadi Pengurus PM 08</label>
             <div className="flex items-center space-x-4">
               <label className="flex items-center">
-                <input type="checkbox" name="kesediaan" value="Bersedia" className="mr-2" checked={kontribusi === "Bersedia"} onChange={() => setkontribusi("Bersedia")} />
+                <input type="checkbox" name="kesediaan" value="iya" className="mr-2" checked={pengurus === "iya"} onChange={() => setpengurus("iya")} />
                 Bersedia
               </label>
               <label className="flex items-center">
-                <input type="checkbox" name="kesediaan" value="Tidak Bersedia" className="mr-2" checked={kontribusi === "Tidak Bersedia"} onChange={() => setkontribusi("Tidak Bersedia")} />
+                <input type="checkbox" name="kesediaan" value="tidak" className="mr-2" checked={pengurus === "tidak"} onChange={() => setpengurus("tidak")} />
                 Tidak Bersedia
               </label>
             </div>
           </div>
 
           {/* keterangan */}
-          <div className="text-sm text-black mt-5">
+          <div className="text-sm text-black mt-3 mb-5">
             Keterangan : <span className="font-semibold">Kartu Anggota PM08 akan dikirim ke alamat pendaftar</span>
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end gap-3 mb-10">
+          <div className="flex justify-between gap-3 mb-10">
+            <div className=" text-black font-medium">
+              Jumlah Pendaftar : <span className="text-[#A31D1D]">{count !== null ? count : "Memuat..."}</span>
+            </div>
             <button type="submit" className={`bg-[#A31D1D] px-7 py-2 text-white rounded-lg`}>
               {isSubmitting ? "Mengirim..." : "Submit"}
             </button>
