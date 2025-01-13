@@ -13,8 +13,9 @@ const Foother = () => {
         <img src="/images/logo-prabowo-mania-08.png" className="w-24 h-16" alt="" />
       </div>
 
-      <div className="text-black text-xs md:text-sm text-center mt-3">0813-8219-9050</div>
-      <div className="text-black text-xs md:text-sm text-center mt-1">Sekretariat Prabowo mania 08 JL. PANGLIMA POLIM VII NO.140, KEBAYORAN BARU - JAKSEL 12160</div>
+      <div className="text-black text-xs md:text-sm text-center mt-3">Sekretariat Prabowo mania 08</div>
+      <div className="text-black text-xs md:text-sm text-center mt-1">JL. PANGLIMA POLIM VII NO.140, KEBAYORAN BARU - JAKSEL 12160</div>
+      <div className="text-black text-xs md:text-sm text-center mt-1">0813-8219-9050</div>
       {/* <div className="flex justify-center gap-3 mt-5 text-lg">
         <FaInstagram />
         <FaFacebook />

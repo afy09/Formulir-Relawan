@@ -63,7 +63,7 @@ const Berita: React.FC = () => {
   return (
     <>
       <div className="flex gap-2 items-center mt-4 justify-center">
-        <h1 className="text-[#A31D1D] text-center font-bold text-xl">Berita PM08</h1>
+        <h1 className="text-[#A31D1D] text-center font-bold text-xl underline">Berita PM08</h1>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
@@ -73,8 +73,8 @@ const Berita: React.FC = () => {
               <img src={item.gambar} alt={item.judul} className="w-full h-full object-cover" />
             </div>
             <div className="p-4">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2 hover:text-[#A31D1D] cursor-pointer" onClick={() => navigate(`/detail/${item.id}`)}>
-                {truncate(item.judul, 50)}
+              <h2 className="text-lg font-semibold text-gray-800 mb-2 hover:text-[#A31D1D] cursor-pointer" onClick={() => navigate(`/detail/${item.id}`)}>
+                {truncate("Ragam Respons Koalisi 02 soal Peluang PKS Gabung Prabowo-Gibran", 50)}
               </h2>
               <p className="text-gray-600 text-sm mb-4 hover:text-[#A31D1D] cursor-pointer" onClick={() => navigate(`/detail/${item.id}`)}>
                 {truncate(item.deskripsi, 100)}

@@ -43,7 +43,7 @@ const DetailBerita: React.FC = () => {
   return (
     <div className="max-w-[650px] mx-auto px-4">
       <div className="px-4 py-4 border border-gray-400 rounded-lg mt-4 mb-4">
-        <h1 className="text-[#A31D1D] font-bold text-xl mb-4">{berita?.judul}</h1>
+        <h1 className="text-[#A31D1D] font-bold text-xl mb-4">Ragam Respons Koalisi 02 soal Peluang PKS Gabung Prabowo-Gibran</h1>
         <img src={berita?.gambar} alt={berita?.judul} className="w-full h-64 object-cover mb-4" />
         <div className="text-gray-600 text-sm mb-4 w-full leading-normal">{berita?.deskripsi}</div>
         <div className="text-gray-500 text-xs">
