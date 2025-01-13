@@ -62,8 +62,8 @@ const Berita: React.FC = () => {
 
   return (
     <>
-      <div className="flex gap-2 items-center mt-4 justify-center">
-        <h1 className="text-[#A31D1D] text-center font-bold text-xl underline">Berita PM08</h1>
+      <div className="flex gap-2 items-center mt-4 justify-center ">
+        <h1 className="text-center font-medium text-xl bg-[#A31D1D] px-4 py-2 text-white rounded-lg">Berita PM08</h1>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
