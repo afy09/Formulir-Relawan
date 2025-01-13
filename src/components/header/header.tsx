@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const Header = () => {
-  const slides = ["/images/header.jpg", "/images/bg-mania08.png", "/images/header.jpg", "/images/bg-mania08.png"]; // Array gambar slider
+  const slides = ["/images/header.png", "/images/bg-mania08.png", "/images/header.png", "/images/bg-mania08.png"]; // Array gambar slider
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
