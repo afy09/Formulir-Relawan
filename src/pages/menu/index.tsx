@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const Menu = () => {
   return (
     <>
-      <div className="flex gap-2 items-center mt-4 justify-center ">
+      <div className="flex gap-2 items-center mt-4 justify-center bg-black px-4 py-2 text-white rounded-lg ">
         {/* <div className="px-2  border bg-[#A31D1D] text-white rounded-full">2</div> */}
-        <h1 className="text-center font-medium text-xl bg-[#A31D1D] px-4 py-2 text-white rounded-lg">Menu</h1>
+        <h1 className="text-center font-medium text-xl ">Menu</h1>
       </div>
 
       <div className=" md:flex gap-2 w-full text-center mt-5 mb-8 ">
