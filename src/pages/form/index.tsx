@@ -226,7 +226,7 @@ const Form = () => {
         </div>
         <div className="flex justify-start mt-4 mb-4">
           <button type="button" className="text-[#A31D1D]  outline-none" onClick={() => setIsExpanded(!isExpanded)}>
-            {isExpanded ? "Sembunyikan" : "Selengkapnya..."}
+            {isExpanded ? "Sembunyikan" : "Selanjutnya..."}
           </button>
         </div>
 
