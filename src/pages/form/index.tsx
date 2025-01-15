@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Menu from "../menu";
 import Berita from "../berita";
 import Foother from "../../components/foother/foother";
 import axios from "axios";
@@ -25,6 +24,7 @@ const Form = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const [count, setCount] = useState(null);
 
@@ -91,141 +91,147 @@ const Form = () => {
         </h1>
       </div>
       <div className="px-4 py-4 border border-gray-400 rounded-lg mt-4 mb-4">
-        <form className="mt-4 flex flex-col gap-4" onSubmit={handleSubmit}>
-          {/* Nama */}
-          <div>
-            <label className="block mb-1 font-semibold">Nama Lengkap</label>
-            <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={nama} onChange={(e) => setnama(e.target.value)} />
-          </div>
-
-          {/* Jenis Kelamin */}
-          <div>
-            <label className="block mb-1 font-semibold">Jenis Kelamin</label>
-            <select name="jenis_kelamin" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={jenis_kelamin} onChange={(e) => setjenis_kelamin(e.target.value)}>
-              <option value="" disabled>
-                Pilih Jenis Kelamin
-              </option>
-              <option value="laki-laki">Laki-Laki</option>
-              <option value="wanita">Wanita</option>
-            </select>
-          </div>
-
-          {/* Tempat */}
-          <div>
-            <label className="block mb-1 font-semibold">Tempat Lahir</label>
-            <input type="text" name="tempat" placeholder="Masukkan Tempat Lahir" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={tempat} onChange={(e) => settempat(e.target.value)} />
-          </div>
-
-          {/* Tanggal Lahir */}
-          <div>
-            <label className="block mb-1 font-semibold">Tanggal Lahir</label>
-            <input type="date" name="tanggal_lahir" placeholder="Masukkan Tanggal Lahir" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={tanggal_lahir} onChange={(e) => settanggal_lahir(e.target.value)} />
-          </div>
-
-          {/* Alamat */}
-          <div>
-            <label className="block mb-1 font-semibold">Alamat</label>
-            <input type="text" name="provinsi" placeholder="Provinsi" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={provinsi} onChange={(e) => setprovinsi(e.target.value)} />
-            <input type="text" name="kabupaten" placeholder="Kabupaten / Kota" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none mt-5" value={kabupaten} onChange={(e) => setkabupaten(e.target.value)} />
-            <input type="text" name="kecamatan" placeholder="Kecamatan" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none mt-5" value={kecamatan} onChange={(e) => setkecamatan(e.target.value)} />
-            <input type="text" name="kelurahan" placeholder="Kelurahan" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none mt-5" value={kelurahan} onChange={(e) => setkelurahan(e.target.value)} />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block mb-1 font-semibold">Email</label>
-            <input type="email" name="email" placeholder="Masukkan Email" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={email} onChange={(e) => setemail(e.target.value)} />
-          </div>
-
-          {/* Nomor Telepon */}
-          <div>
-            <label className="block mb-1 font-semibold">Nomor WhatsApp</label>
-            <input type="text" name="no_hp" placeholder="Masukkan Nomor WhatsApp" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={no_hp} onChange={(e) => setno_hp(e.target.value)} />
-          </div>
-
-          {/* Foto KTA */}
-          <div>
-            <label className="block mb-1 font-semibold">Foto KTA</label>
-            <input
-              type="file"
-              name="ktp"
-              className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none"
-              onChange={(e) => {
-                const file = e.target.files?.[0] || null; // Mendapatkan file pertama yang dipilih atau null
-                setkta(file); // Memperbarui state dengan file
-              }}
-            />
-          </div>
-
-          {/* Foto KTP */}
-          <div>
-            <label className="block mb-1 font-semibold">Foto KTP</label>
-            <input
-              type="file"
-              name="ktp"
-              className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none"
-              onChange={(e) => {
-                const file = e.target.files?.[0] || null; // Mendapatkan file pertama yang dipilih atau null
-                setktp(file); // Memperbarui state dengan file
-              }}
-            />
-          </div>
-          {/* Foto KK */}
-
-          <div>
-            <label className="block mb-1 font-semibold">Foto KK</label>
-            <input
-              type="file"
-              name="ktp"
-              className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none"
-              onChange={(e) => {
-                const file = e.target.files?.[0] || null; // Mendapatkan file pertama yang dipilih atau null
-                setkk(file); // Memperbarui state dengan file
-              }}
-            />
-          </div>
-
-          {/* Motivasi */}
-          <div>
-            <label className="block mb-1 font-semibold">Motivasi Bergabung</label>
-            <textarea rows={4} name="motivasi" placeholder="Masukkan Motivasi Anda" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={motivasi} onChange={(e) => setmotivasi(e.target.value)} />
-          </div>
-
-          {/* pengurus pm08 */}
-
-          <div>
-            <label className="block mb-1 font-semibold">Bersedia menjadi Pengurus PM 08</label>
-            <div className="flex items-center space-x-4">
-              <label className="flex items-center">
-                <input type="checkbox" name="kesediaan" value="iya" className="mr-2" checked={pengurus === "iya"} onChange={() => setpengurus("iya")} />
-                Bersedia
-              </label>
-              <label className="flex items-center">
-                <input type="checkbox" name="kesediaan" value="tidak" className="mr-2" checked={pengurus === "tidak"} onChange={() => setpengurus("tidak")} />
-                Tidak Bersedia
-              </label>
+        <div className={`${isExpanded ? "" : "max-h-[700px] overflow-hidden"}`}>
+          <form className="mt-4 flex flex-col gap-4" onSubmit={handleSubmit}>
+            {/* Nama */}
+            <div>
+              <label className="block mb-1 font-semibold">Nama Lengkap</label>
+              <input type="text" name="nama" placeholder="Masukkan Nama Lengkap" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={nama} onChange={(e) => setnama(e.target.value)} />
             </div>
-          </div>
 
-          {/* keterangan */}
-          <div className="text-sm text-black mt-3 mb-5">
-            Keterangan : <span className="font-semibold">Kartu Anggota PM08 akan dikirim ke alamat pendaftar</span>
-          </div>
-
-          {/* Submit Button */}
-          <div className="flex justify-between gap-3 mb-10">
-            <div className=" text-black font-medium">
-              Jumlah Pendaftar : <span className="text-[#A31D1D]">{count !== null ? count : "Memuat..."}</span>
+            {/* Jenis Kelamin */}
+            <div>
+              <label className="block mb-1 font-semibold">Jenis Kelamin</label>
+              <select name="jenis_kelamin" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={jenis_kelamin} onChange={(e) => setjenis_kelamin(e.target.value)}>
+                <option value="" disabled>
+                  Pilih Jenis Kelamin
+                </option>
+                <option value="laki-laki">Laki-Laki</option>
+                <option value="wanita">Wanita</option>
+              </select>
             </div>
-            <button type="submit" className={`bg-[#A31D1D] px-7 py-2 text-white rounded-lg`}>
-              {isSubmitting ? "Mengirim..." : "Submit"}
-            </button>
-          </div>
-        </form>
+
+            {/* Tempat */}
+            <div>
+              <label className="block mb-1 font-semibold">Tempat Lahir</label>
+              <input type="text" name="tempat" placeholder="Masukkan Tempat Lahir" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={tempat} onChange={(e) => settempat(e.target.value)} />
+            </div>
+
+            {/* Tanggal Lahir */}
+            <div>
+              <label className="block mb-1 font-semibold">Tanggal Lahir</label>
+              <input type="date" name="tanggal_lahir" placeholder="Masukkan Tanggal Lahir" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={tanggal_lahir} onChange={(e) => settanggal_lahir(e.target.value)} />
+            </div>
+
+            {/* Alamat */}
+            <div>
+              <label className="block mb-1 font-semibold">Alamat</label>
+              <input type="text" name="provinsi" placeholder="Provinsi" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={provinsi} onChange={(e) => setprovinsi(e.target.value)} />
+              <input type="text" name="kabupaten" placeholder="Kabupaten / Kota" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none mt-5" value={kabupaten} onChange={(e) => setkabupaten(e.target.value)} />
+              <input type="text" name="kecamatan" placeholder="Kecamatan" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none mt-5" value={kecamatan} onChange={(e) => setkecamatan(e.target.value)} />
+              <input type="text" name="kelurahan" placeholder="Kelurahan" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none mt-5" value={kelurahan} onChange={(e) => setkelurahan(e.target.value)} />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block mb-1 font-semibold">Email</label>
+              <input type="email" name="email" placeholder="Masukkan Email" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={email} onChange={(e) => setemail(e.target.value)} />
+            </div>
+
+            {/* Nomor Telepon */}
+            <div>
+              <label className="block mb-1 font-semibold">Nomor WhatsApp</label>
+              <input type="text" name="no_hp" placeholder="Masukkan Nomor WhatsApp" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={no_hp} onChange={(e) => setno_hp(e.target.value)} />
+            </div>
+
+            {/* Foto KTA */}
+            <div>
+              <label className="block mb-1 font-semibold">Foto KTA</label>
+              <input
+                type="file"
+                name="ktp"
+                className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null; // Mendapatkan file pertama yang dipilih atau null
+                  setkta(file); // Memperbarui state dengan file
+                }}
+              />
+            </div>
+
+            {/* Foto KTP */}
+            <div>
+              <label className="block mb-1 font-semibold">Foto KTP</label>
+              <input
+                type="file"
+                name="ktp"
+                className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null; // Mendapatkan file pertama yang dipilih atau null
+                  setktp(file); // Memperbarui state dengan file
+                }}
+              />
+            </div>
+            {/* Foto KK */}
+
+            <div>
+              <label className="block mb-1 font-semibold">Foto KK</label>
+              <input
+                type="file"
+                name="ktp"
+                className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null; // Mendapatkan file pertama yang dipilih atau null
+                  setkk(file); // Memperbarui state dengan file
+                }}
+              />
+            </div>
+
+            {/* Motivasi */}
+            <div>
+              <label className="block mb-1 font-semibold">Motivasi Bergabung</label>
+              <textarea rows={4} name="motivasi" placeholder="Masukkan Motivasi Anda" className="bg-gray-100 px-3 py-2 w-full rounded-lg outline-none" value={motivasi} onChange={(e) => setmotivasi(e.target.value)} />
+            </div>
+
+            {/* pengurus pm08 */}
+
+            <div>
+              <label className="block mb-1 font-semibold">Bersedia menjadi Pengurus PM 08</label>
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center">
+                  <input type="checkbox" name="kesediaan" value="iya" className="mr-2" checked={pengurus === "iya"} onChange={() => setpengurus("iya")} />
+                  Bersedia
+                </label>
+                <label className="flex items-center">
+                  <input type="checkbox" name="kesediaan" value="tidak" className="mr-2" checked={pengurus === "tidak"} onChange={() => setpengurus("tidak")} />
+                  Tidak Bersedia
+                </label>
+              </div>
+            </div>
+
+            {/* keterangan */}
+            <div className="text-sm text-black mt-3 mb-5">
+              Keterangan : <span className="font-semibold">Kartu Anggota PM08 akan dikirim ke alamat pendaftar</span>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex justify-between gap-3 mb-10">
+              <div className=" text-black font-medium">
+                Jumlah Pendaftar : <span className="text-[#A31D1D]">{count !== null ? count : "Memuat..."}</span>
+              </div>
+              <button type="submit" className={`bg-[#A31D1D] px-7 py-2 text-white rounded-lg`}>
+                {isSubmitting ? "Mengirim..." : "Submit"}
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="flex justify-start mt-4 mb-4">
+          <button type="button" className="text-[#A31D1D]  outline-none" onClick={() => setIsExpanded(!isExpanded)}>
+            {isExpanded ? "Sembunyikan" : "Selengkapnya..."}
+          </button>
+        </div>
 
         <hr />
 
-        <Menu />
         <Berita />
         <Foother />
       </div>

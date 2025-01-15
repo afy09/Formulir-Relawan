@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Menu from "../../pages/menu";
 
 const Header = () => {
   const slides = ["/images/header.png", "/images/bg-mania08.png", "/images/header.png", "/images/bg-mania08.png"]; // Array gambar slider
@@ -21,6 +22,7 @@ const Header = () => {
 
   return (
     <>
+      <Menu />
       <div className=" w-full max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg mt-4">
         {/* Slides */}
         <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
