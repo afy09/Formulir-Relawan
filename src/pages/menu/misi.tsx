@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "../../components/header/header";
+import HeaderTwo from "../../components/header/headerTwo";
 
 const VisiMisi = () => {
   return (
     <div className="max-w-[650px] mx-auto px-4">
-      <Header />
+      <HeaderTwo />
       <div className="px-4 py-4 border border-gray-400 rounded-lg mt-4 mb-4">
         <div className="flex gap-2 items-center mt-4">
           <div className="px-2  border bg-[#A31D1D] text-white rounded-full">2</div>
